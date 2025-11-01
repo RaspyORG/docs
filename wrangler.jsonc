@@ -1,0 +1,12 @@
+{
+  // Name of your project on Cloudflare
+  "name": "raspy",
+
+  // Compatibility date for the Cloudflare Worker runtime
+  "compatibility_date": "2025-11-01",
+
+  // Tell Wrangler to deploy your static site
+  "assets": {
+    "directory": "./build"
+  }
+}
