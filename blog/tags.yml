@@ -1,0 +1,8 @@
+raspy:
+  label: Raspy
+  permalink: /raspy
+  description: Raspy Related
+offtopic:
+  label: Off Topic
+  permalink: /offtopic
+  description: Off Topic Related
