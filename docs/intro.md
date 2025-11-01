@@ -1,47 +1,176 @@
+# Installation Guide
+
+This guide will walk you through how to **set up and install your Raspy instance** on a **local machine** or **cloud server**.
+
+:::note[Windows Installations are NOT supported]
+While you probably can install and configure a Raspy instance on Windows it is not supported or recommended.
+Please if you can use Ubuntu Server, Debian or Arch Linux. Other Linux distros are still supported, but not mentioned in our documentation as many Linux distros share the same package managers, utilities and commands.
+:::
+
 ---
-sidebar_position: 1
----
 
-# Tutorial Intro
+## Linux Installation Guide
 
-Let's discover **Docusaurus in less than 5 minutes**.
+### 1. Connect to Your Server
 
-## Getting Started
-
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
+If you’re installing Raspy on a **remote machine**, you’ll first need to connect via SSH.
+*(If you’re already on the target machine, skip this step.)*
 
 ```bash
-npm init docusaurus@latest my-website classic
+ssh root@[IP_ADDRESS]
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+Enter the root user’s password when prompted.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+---
 
-## Start your site
+### 2. Install Git
 
-Run the development server:
+We’ll use Git to clone the Raspy repository.
+
+**Debian / Ubuntu:**
 
 ```bash
-cd my-website
-npm run start
+apt install git -y
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+**Arch Linux:**
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+```bash
+pacman -S git
+```
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+---
+
+### 3. Clone the Raspy Repository
+
+Download the Raspy source code from GitHub:
+
+```bash
+git clone https://github.com/RaspyORG/bot
+cd bot
+```
+
+---
+
+### 4. Install Node.js and Dependencies
+
+Raspy runs on Node.js, so let’s install it and the required npm packages.
+
+**Debian / Ubuntu:**
+
+```bash
+apt install nodejs npm -y
+```
+
+**Arch Linux:**
+
+```bash
+pacman -S nodejs npm
+```
+
+Then install all project dependencies:
+
+```bash
+npm install
+```
+
+---
+
+### 5. Set Up Environment Variables
+
+Create a `.env` file in the project root directory.
+This file stores sensitive information like your Discord bot token, MongoDB credentials, and Roblox API keys.
+
+Example `.env` file:
+
+```
+BOT_NAME=
+
+# Discord bot credentials
+DISCORD_TOKEN=
+CLIENT_ID=
+GUILD_ID=
+
+# MongoDB connection string
+MONGODB_URI=
+DB_NAME=
+
+# Roblox API credentials
+ROBLOX_CLIENT_ID=
+ROBLOX_CLIENT_SECRET=
+
+# Hostname where the verification service is hosted
+VERIFY_HOST=
+```
+
+
+:::warning[Keep your credentials safe!]
+Never share your `.env` file publicly or commit it to GitHub.  
+It contains private credentials that can give others full access to your bot and database.
+:::
+
+---
+
+### 6. Configure Raspy
+
+Open the configuration file:
+
+```bash
+nano config.json
+```
+
+Inside, you’ll find configuration options for your setup.
+Each line includes comments explaining what to change.
+
+Save and exit with:
+
+```
+CTRL + O  # Save file
+ENTER     # Confirm
+CTRL + X  # Exit nano
+```
+
+---
+
+### 7. Start Raspy
+
+Once everything is configured, you can start your Raspy instance:
+
+```bash
+node .    # or npm start
+```
+
+If the setup is correct, your bot should now be running
+
+---
+
+## Invite Your Discord Bot to a Server
+
+Now that your bot is live, let’s invite it to your Discord server.
+
+1. Open this URL in your browser, replacing `CLIENT_ID` with your bot’s **Application (Client) ID** from the [Discord Developer Portal](https://discord.com/developers/applications):
+
+   ```
+   https://discord.com/oauth2/authorize?client_id=CLIENT_ID&permissions=8&scope=bot%20applications.commands
+   ```
+
+2. Choose the server you want to add your bot to.
+
+3. Click **Authorize** and complete the CAPTCHA if prompted.
+
+Once authorized, your bot should appear online in your Discord server.
+
+---
+
+## You’re All Set!
+
+Congratulations!
+You’ve successfully installed and configured a **Raspy Instance**.
+Your bot is now connected to Discord and ready to go.
+
+If you’d like, you can continue by:
+
+* Setting up systemd
+* Exploring Raspy’s features and command list
+* Contributing to the [Raspy GitHub repository](https://github.com/RaspyORG/bot)
